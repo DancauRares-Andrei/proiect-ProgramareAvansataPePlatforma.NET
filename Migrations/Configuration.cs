@@ -9,8 +9,7 @@
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
-            ContextKey = "proiect_ProgramareAvansataPePlatforma.NET.Models.ApplicationDbContext";
+            AutomaticMigrationsEnabled = true;
         }
 
         protected override void Seed(proiect_ProgramareAvansataPePlatforma.NET.Models.ApplicationDbContext context)

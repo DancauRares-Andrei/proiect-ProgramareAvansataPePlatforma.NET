@@ -1,4 +1,6 @@
 ﻿using System.Data.Entity;
+using System.Data.Entity.Migrations;
+using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
@@ -17,15 +19,23 @@ namespace proiect_ProgramareAvansataPePlatforma.NET.Models
             return userIdentity;
         }
     }
-
+   // [DbConfigurationType(typeof(CustomDbConfiguration))]
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public DbSet<Book> Books { get; set; }
         public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+            : base("DefaultConnection")
         {
+            Database.SetInitializer<IdentityDbContext>(null);
         }
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
 
+
+        {
+            //modelBuilder.HasDefaultSchema("");
+            modelBuilder.Entity<DbMigration>().ToTable("MH");
+
+        }
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
