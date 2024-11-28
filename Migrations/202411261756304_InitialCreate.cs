@@ -74,7 +74,17 @@
                 .PrimaryKey(t => new { t.LoginProvider, t.ProviderKey, t.UserId })
                 .ForeignKey("AspNetUsers", t => t.UserId, cascadeDelete: true)
                 .Index(t => t.UserId);
-            
+            CreateTable(
+                "Books",
+                c => new
+                {
+                    BookId = c.Int(nullable: false, identity: true),
+                    Title = c.String(),
+                    Author = c.String(),
+                    Price = c.Decimal(nullable: false, precision: 18, scale: 2),
+                    Stock = c.Int(nullable: false),
+                })
+                .PrimaryKey(t => t.BookId);
         }
         
         public override void Down()
@@ -94,6 +104,7 @@
             DropTable("AspNetUsers");
             DropTable("AspNetUserRoles");
             DropTable("AspNetRoles");
+            DropTable("Books");
         }
     }
 }

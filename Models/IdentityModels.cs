@@ -19,23 +19,16 @@ namespace proiect_ProgramareAvansataPePlatforma.NET.Models
             return userIdentity;
         }
     }
-   // [DbConfigurationType(typeof(CustomDbConfiguration))]
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public DbSet<Book> Books { get; set; }
         public ApplicationDbContext()
             : base("DefaultConnection")
         {
-            Database.SetInitializer<IdentityDbContext>(null);
-        }
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-
-
-        {
-            //modelBuilder.HasDefaultSchema("");
-            modelBuilder.Entity<DbMigration>().ToTable("MH");
 
         }
+        protected override void OnModelCreating(DbModelBuilder modelBuilder) { base.OnModelCreating(modelBuilder); }
+
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();

@@ -7,23 +7,13 @@
     {
         public override void Up()
         {
-            CreateTable(
-                "Books",
-                c => new
-                    {
-                        BookId = c.Int(nullable: false, identity: true),
-                        Title = c.String(),
-                        Author = c.String(),
-                        Price = c.Decimal(nullable: false, precision: 18, scale: 2),
-                        Stock = c.Int(nullable: false),
-                    })
-                .PrimaryKey(t => t.BookId);
+            
             
         }
         
         public override void Down()
         {
-            DropTable("Books");
+            
         }
     }
 }
