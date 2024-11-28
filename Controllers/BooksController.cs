@@ -26,7 +26,7 @@ namespace proiect_ProgramareAvansataPePlatforma.NET.Controllers
             {
                 db.Books.Add(book);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index","Home");
             }
 
             return View(book);

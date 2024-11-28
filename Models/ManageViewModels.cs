@@ -83,4 +83,13 @@ namespace proiect_ProgramareAvansataPePlatforma.NET.Models
         public string SelectedProvider { get; set; }
         public ICollection<System.Web.Mvc.SelectListItem> Providers { get; set; }
     }
+    public class BookViewModel
+    {
+        public int Id { get; set; }
+        public string Title { get; set; }
+        public string Author { get; set; }
+        public decimal Price { get; set; }
+        public int Stock { get; set; }
+    }
+
 }

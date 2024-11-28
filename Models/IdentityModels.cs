@@ -22,6 +22,7 @@ namespace proiect_ProgramareAvansataPePlatforma.NET.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public DbSet<Book> Books { get; set; }
+        public DbSet<Order> Orders { get; set; }
         public ApplicationDbContext()
             : base("DefaultConnection")
         {

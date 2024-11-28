@@ -1,4 +1,5 @@
-﻿using System;
+﻿using proiect_ProgramareAvansataPePlatforma.NET.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,8 +9,14 @@ namespace proiect_ProgramareAvansataPePlatforma.NET.Controllers
 {
     public class HomeController : Controller
     {
+        private ApplicationDbContext db = new ApplicationDbContext();
         public ActionResult Index()
         {
+            var orders = db.Orders
+        .OrderByDescending(o => o.OrderDate) // Sortează descrescător după OrderDate
+        .ToList();
+
+            ViewBag.Orders = orders;
             return View();
         }
 
