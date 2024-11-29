@@ -1,6 +1,6 @@
 ﻿@{
     ViewBag.Title = "Home Page";
-    var orders = ViewBag.Orders as List<proiect_ProgramareAvansataPePlatforma.NET.Models.Order>;
+    var orders = ViewBag.Orders as List<proiect_ProgramareAvansataPePlatforma.NET.Models.OrderViewModel>;
 }
 
 <main>
@@ -12,29 +12,24 @@
 
     <div class="row">
         <section class="col-md-4" aria-labelledby="gettingStartedTitle">
-            <h2>Lista Comenzi</h2>
+            <h2>Ultimele noastre comenzi</h2>
 
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th>ID Comandă</th>
                         <th>Utilizator</th>
                         <th>Cartea</th>
                         <th>Data Comenzii</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @if (false)
-                    {
-                    foreach (var order in orders)
+                    @foreach (var order in orders)
                     {
                         <tr>
-                            <td>@order.OrderId</td>
-                            <td>@order.UserId</td> <!-- Sau orice proprietate relevantă a utilizatorului -->
-                            <td>@order.BookId</td> <!-- Sau orice proprietate relevantă a cărții -->
+                            <td>@order.UserId</td> 
+                            <td>@order.BookId</td> 
                             <td>@order.OrderDate</td>
                         </tr>
-                    }
                     }
                 </tbody>
             </table>

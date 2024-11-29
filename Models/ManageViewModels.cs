@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
@@ -91,5 +92,11 @@ namespace proiect_ProgramareAvansataPePlatforma.NET.Models
         public decimal Price { get; set; }
         public int Stock { get; set; }
     }
-
+    public class OrderViewModel
+    {
+       // public int OrderId { get; set; }
+        public string UserId { get; set; }
+        public string BookId { get; set; }
+        public DateTime OrderDate { get; set; }
+    }
 }
