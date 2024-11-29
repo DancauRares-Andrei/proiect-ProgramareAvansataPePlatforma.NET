@@ -1,33 +1,61 @@
-﻿@{
+﻿@model List<proiect_ProgramareAvansataPePlatforma.NET.Models.OrderViewModel>
+
+@{
     ViewBag.Title = "Home Page";
     var orders = ViewBag.Orders as List<proiect_ProgramareAvansataPePlatforma.NET.Models.OrderViewModel>;
+    var books = ViewBag.Books as List<proiect_ProgramareAvansataPePlatforma.NET.Models.Book>;
 }
+<div class="row">
+    <section class="col-md-4" aria-labelledby="gettingStartedTitle">
+        <h2>Ultimele noastre comenzi</h2>
 
-<main>
-    <div class="row">
-        <section class="col-md-4" aria-labelledby="gettingStartedTitle">
-            <h2>Ultimele noastre comenzi</h2>
-
-            <table class="table table-striped">
-                <thead>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Utilizator</th>
+                    <th>Cărțile și Cantitățile</th>
+                    <th>Data Comenzii</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var order in orders)
+                {
                     <tr>
-                        <th>Utilizator</th>
-                        <th>Cartea</th>
-                        <th>Data Comenzii</th>
+                        <td>@order.UserEmail</td>
+                        <td>
+                            @foreach (var bookDetail in order.BookDetails)
+                            {
+                                <p>@bookDetail.Key - Cantitate: @bookDetail.Value</p>
+                            }
+                        </td>
+                        <td>@order.OrderDate</td>
                     </tr>
-                </thead>
-                <tbody>
-                    @foreach (var order in orders)
-                    {
-                        <tr>
-                            <td>@order.UserId</td>
-                            <td>@order.BookId</td>
-                            <td>@order.OrderDate</td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </section>
-        <section class="col-md-4" aria-labelledby="librariesTitle"> </section>
-    </div>
-</main>
+                }
+            </tbody>
+        </table>
+    </section>
+    <section class="col-md-4" aria-labelledby="librariesTitle">
+        <h3>Cărți Disponibile</h3>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Titlu</th>
+                    <th>Autor</th>
+                    <th>Preț</th>
+                    <th>Stoc</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var book in books)
+                {
+                    <tr>
+                        <td>@book.Title</td>
+                        <td>@book.Author</td>
+                        <td>@book.Price</td>
+                        <td>@book.Stock</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </section>
+</div>

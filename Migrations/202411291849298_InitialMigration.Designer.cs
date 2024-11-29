@@ -7,13 +7,13 @@ namespace proiect_ProgramareAvansataPePlatforma.NET.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.5.1")]
-    public sealed partial class Orders : IMigrationMetadata
+    public sealed partial class InitialMigration : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(Orders));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(InitialMigration));
         
         string IMigrationMetadata.Id
         {
-            get { return "202411281743314_Orders"; }
+            get { return "202411291849298_InitialMigration"; }
         }
         
         string IMigrationMetadata.Source

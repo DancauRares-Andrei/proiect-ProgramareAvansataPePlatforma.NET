@@ -12,19 +12,45 @@ namespace proiect_ProgramareAvansataPePlatforma.NET.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
         public ActionResult Index()
         {
-            var orders = (from o in db.Orders
-                          join b in db.Books on o.BookId equals b.BookId
+            var books = db.Books.Where(b => b.Stock > 0).ToList();
+            ViewBag.Books = books;
+            ViewBag.BookId = new SelectList(db.Books, "BookId", "Title");
+            var orders = new List<OrderViewModel>();
+            try
+            {
+                orders = (from o in db.Orders
+                          join od in db.OrderDetails on o.OrderId equals od.OrderId
+                          join b in db.Books on od.BookId equals b.BookId
+                          join u in db.Users on o.UserId equals u.Id
                           orderby o.OrderDate descending
-                          select new OrderViewModel
+                          group new { o, b, u, od } by new { o.OrderId, o.OrderDate, o.UserId, u.Email } into g
+                          select new
                           {
-                              UserId = o.UserId,
-                              BookId = b.Title,
-                              OrderDate= o.OrderDate
+                              g.Key.UserId,
+                              g.Key.Email,
+                              OrderDate = g.Key.OrderDate,
+                              Books = g.Select(x => new { x.b.Title, x.od.Quantity }).ToList()
+                          }).AsEnumerable() // Trecem la evaluare in memorie
+                          .Select(g => new OrderViewModel
+                          {
+                              UserId = g.UserId,
+                              UserEmail = g.Email,
+                              BookDetails = g.Books.ToDictionary(x => x.Title, x => x.Quantity),
+                              OrderDate = g.OrderDate
                           }).ToList();
-
-            ViewBag.Orders = orders;
+            }
+            catch (Exception ex)
+            {
+                orders = new List<OrderViewModel>();
+            }
+            finally
+            {
+                ViewBag.Orders = orders;
+            }
             return View();
         }
+
+
 
         public ActionResult About()
         {

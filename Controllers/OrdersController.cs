@@ -19,49 +19,62 @@ namespace proiect_ProgramareAvansataPePlatforma.NET.Controllers
             var books = db.Books.Where(b => b.Stock > 0).ToList();
             ViewBag.Books = books;
             ViewBag.BookId = new SelectList(db.Books, "BookId", "Title");
-            ViewBag.UserId = new SelectList(db.Users, "Id", "Id");
+
+            // Obține Id-ul utilizatorului pe baza email-ului User.Identity.Name
+            var userEmail = User.Identity.Name;
+            var user = db.Users.FirstOrDefault(u => u.Email == userEmail);
+            if (user != null)
+            {
+                ViewBag.UserId = user.Id;
+            }
+            else
+            {
+                // Dacă utilizatorul nu este găsit, gestionează situația corespunzător
+                ViewBag.UserId = null; // Sau orice valoare implicită dorești
+            }
+
             return View();
         }
 
-        // POST: Orders/Create
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "OrderId,UserId,BookId,OrderDate")] Order order)
+        public ActionResult Create(Order order, int[] selectedBooks, int[] quantities)
         {
             if (ModelState.IsValid)
             {
-                // Verifică dacă există suficiente stocuri
-                var book = db.Books.SingleOrDefault(b => b.BookId == order.BookId);
-                if (book != null)
-                {
-                    if (book.Stock > 0)
-                    {
-                        // Scade cantitatea din stoc
-                        book.Stock--;
+                order.OrderDate = DateTime.Now;
+                db.Orders.Add(order);
+                db.SaveChanges();
 
-                        // Salvează modificările pentru stoc
+                // Adăugare OrderDetails
+                for (int i = 0; i < selectedBooks.Length; i++)
+                {
+                    int bookId = selectedBooks[i];
+                    int quantity = quantities[i];
+                    var book = db.Books.Find(bookId);
+                    if (book != null && book.Stock >= quantity)
+                    {
+                        book.Stock -= quantity;
                         db.Entry(book).State = EntityState.Modified;
 
-                        // Salvează comanda
-                        order.OrderDate = DateTime.Now;
-                        db.Orders.Add(order);
-                        db.SaveChanges();
+                        var orderDetail = new OrderDetail
+                        {
+                            OrderId = order.OrderId,
+                            BookId = bookId,
+                            Quantity = quantity
+                        };
+                        db.OrderDetails.Add(orderDetail);
+                    }
+                }
 
-                        return RedirectToAction("Index", "Home");
-                    }
-                    else
-                    {
-                        ModelState.AddModelError("", "Stoc insuficient pentru a finaliza cumpărarea.");
-                    }
-                }
-                else
-                {
-                    ModelState.AddModelError("", "Cartea nu a fost găsită.");
-                }
+                db.SaveChanges();
+                return RedirectToAction("Index", "Home");
             }
 
-            ViewBag.BookId = new SelectList(db.Books.Where(b => b.Stock > 0), "BookId", "Title", order.BookId);
-            ViewBag.UserId = User.Identity.Name; 
+            var books = db.Books.Where(b => b.Stock > 0).ToList();
+            ViewBag.Books = books;
+            ViewBag.UserId = new SelectList(db.Users, "Id", "Id");
             return View(order);
         }
 

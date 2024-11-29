@@ -12,6 +12,7 @@ namespace proiect_ProgramareAvansataPePlatforma.NET.Models
         public string Author { get; set; }
         public decimal Price { get; set; }
         public int Stock { get; set; }
+        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
     }
 
 }

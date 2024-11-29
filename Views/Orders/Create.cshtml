@@ -11,46 +11,49 @@
 {
     @Html.AntiForgeryToken()
 
-<div class="form-horizontal">
-    <h4>Comandă</h4>
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    @Html.HiddenFor(model => model.UserId, new { @Value = @User.Identity.Name })
-    <div class="form-group">
-        @Html.LabelFor(model => model.BookId, "Carte", new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownList("BookId", null, new { @class = "form-control" })
+    <div class="form-horizontal">
+        <h4>Comandă</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        @Html.HiddenFor(model => model.UserId, new { @Value = ViewBag.UserId })
+    <p>@User.Identity.Name</p>
+        <div class="form-group">
+            <label class="control-label col-md-2">Cărți</label>
+            <div class="col-md-10">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Selectează</th>
+                            <th>Titlu</th>
+                            <th>Autor</th>
+                            <th>Preț</th>
+                            <th>Stoc</th>
+                            <th>Cantitate</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var book in books)
+                        {
+                            <tr>
+                                <td><input type="checkbox" name="selectedBooks" value="@book.BookId" /></td>
+                                <td>@book.Title</td>
+                                <td>@book.Author</td>
+                                <td>@book.Price</td>
+                                <td>@book.Stock</td>
+                                <td><input type="number" name="quantities" min="1" max="@book.Stock" value="1" /></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <br />
+                <input type="submit" value="Save" class="btn btn-primary btn-md" />
+            </div>
         </div>
     </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <br />
-            <input type="submit" value="Save" class="btn btn-primary btn-md" />
-        </div>
-    </div>
-    <div>
-        <h3>Cărți Disponibile</h3>
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Titlu</th>
-                    <th>Autor</th>
-                    <th>Preț</th>
-                    <th>Stoc</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var book in books)
-                {
-                    <tr>
-                        <td>@book.Title</td>
-                        <td>@book.Author</td>
-                        <td>@book.Price</td>
-                        <td>@book.Stock</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    </div>
-</div>
 }

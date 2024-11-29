@@ -94,9 +94,10 @@ namespace proiect_ProgramareAvansataPePlatforma.NET.Models
     }
     public class OrderViewModel
     {
-       // public int OrderId { get; set; }
         public string UserId { get; set; }
-        public string BookId { get; set; }
+        public string UserEmail { get; set; }
+        public Dictionary<string, int> BookDetails { get; set; } // Titlu și Stoc
         public DateTime OrderDate { get; set; }
     }
+
 }
