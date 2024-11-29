@@ -1,19 +1,48 @@
 ﻿@{
     ViewBag.Title = "Contact";
 }
-<main aria-labelledby="title">
-    <h2 id="title">@ViewBag.Title.</h2>
-    <h3>@ViewBag.Message</h3>
 
-    <address>
-        One Microsoft Way<br />
-        Redmond, WA 98052-6399<br />
-        <abbr title="Phone">P:</abbr>
-        425.555.0100
-    </address>
+<h2>Contact</h2>
 
-    <address>
-        <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
-        <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
-    </address>
-</main>
+<div class="contact-details">
+    <h3>Magazinul de cărți "Universul cărților"</h3>
+    <p><strong>Adresă:</strong> Calea Mărășești 157, Bacău 600115</p>
+    <p><strong>Telefon:</strong> +40 123 456 789</p>
+    <p><strong>Email:</strong> contact@universulcartilor.ro</p>
+</div>
+
+<h3>Harta Locației</h3>
+<div id="map" style="height: 400px; width: 100%;"></div>
+
+<!-- Include CSS-ul Mapbox -->
+<link href="https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.css" rel="stylesheet" />
+
+<!-- Include Scriptul Mapbox -->
+<script src="https://api.mapbox.com/mapbox-gl-js/v2.7.0/mapbox-gl.js"></script>
+
+<script>
+    mapboxgl.accessToken = 'pk.eyJ1Ijoic3RlcnMyYW5kcmVpIiwiYSI6ImNtNDM2ZGUwazA1enEya3F3czhxcjZlZGQifQ.0MuPHAyoOrVRnPgrhgpjug'; // Înlocuiește cu token-ul tău de acces Mapbox
+    var map = new mapboxgl.Map({
+        container: 'map', // ID-ul div-ului unde va fi afișată harta
+        style: 'mapbox://styles/mapbox/streets-v11', // Stilul hărții
+        center: [26.91424, 46.554160], // Coordonatele aproximative pentru Calea Mărășești 157, Bacău (lng, lat)
+        zoom: 15 // Nivelul de zoom
+    });
+
+    // Adaugă un marker pe hartă
+    var marker = new mapboxgl.Marker()
+        .setLngLat([26.9156, 46.5743]) // Coordonatele marker-ului
+        .setPopup(new mapboxgl.Popup().setHTML('<h3>Universul cărților</h3><p>Calea Mărășești 157, Bacău</p>')) // Adaugă un popup la marker
+        .addTo(map);
+</script>
+<h3>Harta alternativă a locației(dacă nu funcționează API-ul)</h3>
+<iframe src="https://embed.waze.com/iframe?zoom=16&lat=46.554160&lon=26.914249&ct=livemap" width="600" height="450" allowfullscreen></iframe>
+<style>
+    .contact-details {
+        margin-bottom: 20px;
+    }
+
+        .contact-details p {
+            font-size: 16px;
+        }
+</style>
