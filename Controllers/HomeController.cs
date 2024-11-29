@@ -12,9 +12,16 @@ namespace proiect_ProgramareAvansataPePlatforma.NET.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
         public ActionResult Index()
         {
-            var orders = db.Orders
-        .OrderByDescending(o => o.OrderDate) // Sortează descrescător după OrderDate
-        .ToList();
+            var orders = (from o in db.Orders
+                          join b in db.Books on o.BookId equals b.BookId
+                          orderby o.OrderDate descending
+                          select new
+                          {
+                              o.OrderId,
+                              UserEmail = o.UserId,
+                              BookTitle = b.Title,
+                              o.OrderDate
+                          }).ToList();
 
             ViewBag.Orders = orders;
             return View();

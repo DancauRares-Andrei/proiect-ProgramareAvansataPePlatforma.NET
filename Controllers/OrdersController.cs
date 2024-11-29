@@ -1,4 +1,5 @@
-﻿using proiect_ProgramareAvansataPePlatforma.NET.Models;
+﻿using Microsoft.AspNet.Identity;
+using proiect_ProgramareAvansataPePlatforma.NET.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -18,7 +19,7 @@ namespace proiect_ProgramareAvansataPePlatforma.NET.Controllers
             var books = db.Books.Where(b => b.Stock > 0).ToList();
             ViewBag.Books = books;
             ViewBag.BookId = new SelectList(db.Books, "BookId", "Title");
-            ViewBag.UserId = new SelectList(db.Users, "Id", "Email");
+            ViewBag.UserId = new SelectList(db.Users, "Id", "Id");
             return View();
         }
 
@@ -60,7 +61,7 @@ namespace proiect_ProgramareAvansataPePlatforma.NET.Controllers
             }
 
             ViewBag.BookId = new SelectList(db.Books.Where(b => b.Stock > 0), "BookId", "Title", order.BookId);
-            ViewBag.UserId = User.Identity.Name; // Sau folosește SelectList pentru utilizatori
+            ViewBag.UserId = User.Identity.Name; 
             return View(order);
         }
 

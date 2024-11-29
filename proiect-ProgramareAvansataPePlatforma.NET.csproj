@@ -274,6 +274,18 @@
     <Compile Include="Migrations\202411281743314_Orders.Designer.cs">
       <DependentUpon>202411281743314_Orders.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202411282052399_Orders1.cs" />
+    <Compile Include="Migrations\202411282052399_Orders1.Designer.cs">
+      <DependentUpon>202411282052399_Orders1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202411282101303_Orders2.cs" />
+    <Compile Include="Migrations\202411282101303_Orders2.Designer.cs">
+      <DependentUpon>202411282101303_Orders2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202411290423221_Orders3.cs" />
+    <Compile Include="Migrations\202411290423221_Orders3.Designer.cs">
+      <DependentUpon>202411290423221_Orders3.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Book.cs" />
@@ -402,6 +414,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202411281743314_Orders.resx">
       <DependentUpon>202411281743314_Orders.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202411282052399_Orders1.resx">
+      <DependentUpon>202411282052399_Orders1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202411282101303_Orders2.resx">
+      <DependentUpon>202411282101303_Orders2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202411290423221_Orders3.resx">
+      <DependentUpon>202411290423221_Orders3.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

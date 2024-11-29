@@ -15,7 +15,7 @@
     <h4>Comandă</h4>
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
+<p>@User.Identity.Name</p> 
     <div class="form-group">
         @Html.LabelFor(model => model.BookId, "Carte", new { @class = "control-label col-md-2" })
         <div class="col-md-10">
@@ -23,33 +23,34 @@
             @Html.ValidationMessageFor(model => model.BookId, "", new { @class = "text-danger" })
         </div>
     </div>
-    <h3>Cărți Disponibile</h3>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Titlu</th>
-                <th>Autor</th>
-                <th>Preț</th>
-                <th>Stoc</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var book in books)
-            {
-                <tr>
-                    <td>@book.Title</td>
-                    <td>@book.Author</td>
-                    <td>@book.Price</td>
-                    <td>@book.Stock</td>
-                </tr>
-            }
-        </tbody>
-    </table>
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
             <input type="submit" value="Save" class="btn btn-primary btn-md" />
         </div>
     </div>
-
+    <div>
+        <h3>Cărți Disponibile</h3>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Titlu</th>
+                    <th>Autor</th>
+                    <th>Preț</th>
+                    <th>Stoc</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var book in books)
+                {
+                    <tr>
+                        <td>@book.Title</td>
+                        <td>@book.Author</td>
+                        <td>@book.Price</td>
+                        <td>@book.Stock</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>
 }

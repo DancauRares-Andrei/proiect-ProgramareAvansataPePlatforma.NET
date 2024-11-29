@@ -24,7 +24,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var order in orders)
+                    @if (false)
+                    {
+                    foreach (var order in orders)
                     {
                         <tr>
                             <td>@order.OrderId</td>
@@ -32,6 +34,7 @@
                             <td>@order.BookId</td> <!-- Sau orice proprietate relevantă a cărții -->
                             <td>@order.OrderDate</td>
                         </tr>
+                    }
                     }
                 </tbody>
             </table>
