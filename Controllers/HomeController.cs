@@ -16,6 +16,24 @@ namespace proiect_ProgramareAvansataPePlatforma.NET.Controllers
             ViewBag.Books = books;
             ViewBag.BookId = new SelectList(db.Books, "BookId", "Title");
             var orders = new List<OrderViewModel>();
+            var now = DateTime.Now;
+            var startCurrentMonth = new DateTime(now.Year, now.Month, 1);
+            var startLastMonth = startCurrentMonth.AddMonths(-1);
+            var startTwoMonthsAgo = startCurrentMonth.AddMonths(-2);
+
+            var salesData = new List<dynamic>
+    {
+        new { Month = "Acum 2 luni", Count = db.OrderDetails
+            .Where(od => od.Order.OrderDate >= startTwoMonthsAgo && od.Order.OrderDate < startLastMonth)
+            .Sum(od => (int?)od.Quantity) ?? 0 },
+        new { Month = "Luna trecută", Count = db.OrderDetails
+            .Where(od => od.Order.OrderDate >= startLastMonth && od.Order.OrderDate < startCurrentMonth)
+            .Sum(od => (int?)od.Quantity) ?? 0 },
+        new { Month = "Luna curentă", Count = db.OrderDetails
+            .Where(od => od.Order.OrderDate >= startCurrentMonth)
+            .Sum(od => (int?)od.Quantity) ?? 0 }
+    };
+            ViewBag.SalesData = salesData;
             try
             {
                 orders = (from o in db.Orders
@@ -48,6 +66,38 @@ namespace proiect_ProgramareAvansataPePlatforma.NET.Controllers
                 ViewBag.Orders = orders;
             }
             return View();
+        }
+
+        public ActionResult Chart()
+        {
+            var now = DateTime.Now;
+            var startCurrentMonth = new DateTime(now.Year, now.Month, 1);
+            var startLastMonth = startCurrentMonth.AddMonths(-1);
+            var startTwoMonthsAgo = startCurrentMonth.AddMonths(-2);
+
+            var salesData = new List<dynamic>
+    {
+        new { Month = "Acum 2 luni", Count = db.OrderDetails
+            .Where(od => od.Order.OrderDate >= startTwoMonthsAgo && od.Order.OrderDate < startLastMonth)
+            .Sum(od => (int?)od.Quantity) ?? 0 },
+        new { Month = "Luna trecută", Count = db.OrderDetails
+            .Where(od => od.Order.OrderDate >= startLastMonth && od.Order.OrderDate < startCurrentMonth)
+            .Sum(od => (int?)od.Quantity) ?? 0 },
+        new { Month = "Luna curentă", Count = db.OrderDetails
+            .Where(od => od.Order.OrderDate >= startCurrentMonth)
+            .Sum(od => (int?)od.Quantity) ?? 0 }
+    };
+
+            var chart = new System.Web.Helpers.Chart(width: 600, height: 400)
+                .AddTitle("Cărți Vândute în Ultimele 3 Luni")
+                .AddSeries(
+                    chartType: "Column",
+                    xValue: salesData.Select(s => s.Month).ToArray(),
+                    yValues: salesData.Select(s => s.Count).ToArray()
+                )
+                .GetBytes("png");
+
+            return File(chart, "image/png");
         }
 
 

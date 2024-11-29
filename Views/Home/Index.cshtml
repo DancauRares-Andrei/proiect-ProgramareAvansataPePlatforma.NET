@@ -58,4 +58,12 @@
             </tbody>
         </table>
     </section>
+    <h2>Numărul de cărți vândute în ultimele 3 luni</h2>
+    <section class="col-md-4" aria-labelledby="librariesTitle">
+        @{
+            var chartUrl = Url.Action("Chart", "Home");
+        }
+        <img src="@chartUrl" alt="Cărți Vândute în Ultimele 3 Luni" width="600" height="400" />
+    </section>
+
 </div>
