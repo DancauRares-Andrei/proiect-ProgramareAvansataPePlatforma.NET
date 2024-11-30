@@ -4,56 +4,62 @@
     ViewBag.Title = "Plasează Comandă";
     var books = ViewBag.Books as List<proiect_ProgramareAvansataPePlatforma.NET.Models.Book>;
 }
-
-<h2>Plasează Comandă</h2>
-
-@using (Html.BeginForm())
+@if (Request.IsAuthenticated)
 {
-    @Html.AntiForgeryToken()
+    <h2>Plasează Comandă</h2>
 
-    <div class="form-horizontal">
-        <h4>Comandă</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
 
-        @Html.HiddenFor(model => model.UserId, new { @Value = ViewBag.UserId })
-    <p>@User.Identity.Name</p>
-        <div class="form-group">
-            <label class="control-label col-md-2">Cărți</label>
-            <div class="col-md-10">
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th>Selectează</th>
-                            <th>Titlu</th>
-                            <th>Autor</th>
-                            <th>Preț</th>
-                            <th>Stoc</th>
-                            <th>Cantitate</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var book in books)
-                        {
+        <div class="form-horizontal">
+            <h4>Comandă</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            @Html.HiddenFor(model => model.UserId, new { @Value = ViewBag.UserId })
+            <p>@User.Identity.Name</p>
+            <div class="form-group">
+                <label class="control-label col-md-2">Cărți</label>
+                <div class="col-md-10">
+                    <table class="table table-striped">
+                        <thead>
                             <tr>
-                                <td><input type="checkbox" name="selectedBooks" value="@book.BookId" /></td>
-                                <td>@book.Title</td>
-                                <td>@book.Author</td>
-                                <td>@book.Price</td>
-                                <td>@book.Stock</td>
-                                <td><input type="number" name="quantities" min="1" max="@book.Stock" value="1" /></td>
+                                <th>Selectează</th>
+                                <th>Titlu</th>
+                                <th>Autor</th>
+                                <th>Preț</th>
+                                <th>Stoc</th>
+                                <th>Cantitate</th>
                             </tr>
-                        }
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @foreach (var book in books)
+                            {
+                                <tr>
+                                    <td><input type="checkbox" name="selectedBooks" value="@book.BookId" /></td>
+                                    <td>@book.Title</td>
+                                    <td>@book.Author</td>
+                                    <td>@book.Price</td>
+                                    <td>@book.Stock</td>
+                                    <td><input type="number" name="quantities" min="1" max="@book.Stock" value="1" /></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <br />
-                <input type="submit" value="Save" class="btn btn-primary btn-md" />
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <br />
+                    <input type="submit" value="Save" class="btn btn-primary btn-md" />
+                </div>
             </div>
         </div>
-    </div>
+    }
+}
+else
+{
+    @Html.Raw("<script>window.location.href='" + Url.Action("Index", "Home") + "';</script>")
 }

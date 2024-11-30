@@ -57,7 +57,7 @@ namespace proiect_ProgramareAvansataPePlatforma.NET.Controllers
                               OrderDate = g.OrderDate
                           }).ToList();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 orders = new List<OrderViewModel>();
             }
