@@ -4,6 +4,7 @@
     ViewBag.Title = "Home Page";
     var orders = ViewBag.Orders as List<proiect_ProgramareAvansataPePlatforma.NET.Models.OrderViewModel>;
     var books = ViewBag.Books as List<proiect_ProgramareAvansataPePlatforma.NET.Models.Book>;
+    WebGrid grid = new WebGrid(books);
 }
 <div class="row">
     <section class="col-md-4" aria-labelledby="gettingStartedTitle">
@@ -36,27 +37,13 @@
     </section>
     <section class="col-md-4" aria-labelledby="librariesTitle">
         <h3>Cărți Disponibile</h3>
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Titlu</th>
-                    <th>Autor</th>
-                    <th>Preț</th>
-                    <th>Stoc</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var book in books)
-                {
-                    <tr>
-                        <td>@book.Title</td>
-                        <td>@book.Author</td>
-                        <td>@book.Price</td>
-                        <td>@book.Stock</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+        @grid.GetHtml(columns: new[]
+         {
+         grid.Column("Title","Titlu"),
+         grid.Column("Author","Autor"),
+         grid.Column("Price","Pret"),
+         grid.Column("Stock","Stoc")
+         })
     </section>
     <section class="col-md-4" aria-labelledby="hostingTitle">
         <h2>Numărul de cărți vândute în ultimele 3 luni</h2>
