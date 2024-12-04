@@ -13,63 +13,87 @@ namespace proiect_ProgramareAvansataPePlatforma.NET.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: Orders/Create
         public ActionResult Create()
         {
-            var books = db.Books.Where(b => b.Stock > 0).ToList();
-            ViewBag.Books = books;
-            ViewBag.BookId = new SelectList(db.Books, "BookId", "Title");
-
-            // Obține Id-ul utilizatorului pe baza email-ului User.Identity.Name
-            var userEmail = User.Identity.Name;
-            var user = db.Users.FirstOrDefault(u => u.Email == userEmail);
-            if (user != null)
+            try
             {
-                ViewBag.UserId = user.Id;
-            }
-            else
-            {
-                // Dacă utilizatorul nu este găsit, gestionează situația corespunzător
-                ViewBag.UserId = null; // Sau orice valoare implicită dorești
-            }
+                var books = db.Books.Where(b => b.Stock > 0).ToList();
+                ViewBag.Books = books;
+                ViewBag.BookId = new SelectList(db.Books, "BookId", "Title");
 
-            return View();
+                var userEmail = User.Identity.Name;
+                var user = db.Users.FirstOrDefault(u => u.Email == userEmail);
+                if (user != null)
+                {
+                    ViewBag.UserId = user.Id;
+                }
+                else
+                {
+                    ViewBag.UserId = null; 
+                }
+
+                return View();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Trace.TraceError($"Eroare la inițializarea paginii Create: {ex.Message}");
+                return RedirectToAction("Error", "Home", new HandleErrorInfo(ex, "Books", "Create"));
+            }
+            finally
+            {
+                if (db != null)
+                {
+                    db.Dispose();
+                }
+            }
         }
-
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Order order, int[] selectedBooks, int[] quantities)
         {
-            if (ModelState.IsValid)
+            try
             {
-                order.OrderDate = DateTime.Now;
-                db.Orders.Add(order);
-                db.SaveChanges();
-
-                // Adăugare OrderDetails
-                for (int i = 0; i < selectedBooks.Length; i++)
+                if (ModelState.IsValid)
                 {
-                    int bookId = selectedBooks[i];
-                    int quantity = quantities[i];
-                    var book = db.Books.Find(bookId);
-                    if (book != null && book.Stock >= quantity)
+                    order.OrderDate = DateTime.Now;
+                    db.Orders.Add(order);
+                    db.SaveChanges();
+
+                    for (int i = 0; i < selectedBooks.Length; i++)
                     {
-                        book.Stock -= quantity;
-                        db.Entry(book).State = EntityState.Modified;
-
-                        var orderDetail = new OrderDetail
+                        int bookId = selectedBooks[i];
+                        int quantity = quantities[i];
+                        var book = db.Books.Find(bookId);
+                        if (book != null && book.Stock >= quantity)
                         {
-                            OrderId = order.OrderId,
-                            BookId = bookId,
-                            Quantity = quantity
-                        };
-                        db.OrderDetails.Add(orderDetail);
-                    }
-                }
+                            book.Stock -= quantity;
+                            db.Entry(book).State = EntityState.Modified;
 
-                db.SaveChanges();
-                return RedirectToAction("Index", "Home");
+                            var orderDetail = new OrderDetail
+                            {
+                                OrderId = order.OrderId,
+                                BookId = bookId,
+                                Quantity = quantity
+                            };
+                            db.OrderDetails.Add(orderDetail);
+                        }
+                    }
+
+                    db.SaveChanges();
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Trace.TraceError($"Eroare la crearea comenzii: {ex.Message}");
+            }
+            finally
+            {
+                if (db != null)
+                {
+                    db.Dispose();
+                }
             }
 
             var books = db.Books.Where(b => b.Stock > 0).ToList();
@@ -77,6 +101,7 @@ namespace proiect_ProgramareAvansataPePlatforma.NET.Controllers
             ViewBag.UserId = new SelectList(db.Users, "Id", "Id");
             return View(order);
         }
+
 
     }
 }

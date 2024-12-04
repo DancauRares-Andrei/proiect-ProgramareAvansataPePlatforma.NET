@@ -15,6 +15,7 @@ namespace proiect_ProgramareAvansataPePlatforma.NET.Models
         public string Author { get; set; }
 
         [Required(ErrorMessage = "Titlul cărții este obligatoriu.")]
+        [Key]
         [StringLength(100, ErrorMessage = "Titlul cărții nu poate avea mai mult de 100 de caractere.")]
         [RegularExpression(@"^[a-zA-Z0-9\s]+$", ErrorMessage = "Titlul cărții poate conține doar litere, cifre și spații.")]
         public string Title { get; set; }
