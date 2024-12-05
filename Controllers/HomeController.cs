@@ -41,26 +41,26 @@ namespace proiect_ProgramareAvansataPePlatforma.NET.Controllers
 
                 try
                 {
-                    orders = (from o in db.Orders
-                              join od in db.OrderDetails on o.OrderId equals od.OrderId
-                              //join b in db.Books on od.BookId equals b.BookId
-                              join u in db.Users on o.UserId equals u.Id
-                              orderby o.OrderDate descending
-                              group new { o, u, od } by new { o.OrderId, o.OrderDate, o.UserId, u.Email } into g
-                              select new
-                              {
-                                  g.Key.UserId,
-                                  g.Key.Email,
-                                  OrderDate = g.Key.OrderDate,
-                                  Books = g.Select(x => new { x.od.BookTitle, x.od.Quantity }).ToList()
-                              }).AsEnumerable() // Trecem la evaluare in memorie
-                         .Select(g => new OrderViewModel
-                         {
-                             UserId = g.UserId,
-                             UserEmail = g.Email,
-                             BookDetails = g.Books.ToDictionary(x => x.BookTitle, x => x.Quantity),
-                             OrderDate = g.OrderDate
-                         }).ToList();
+                   orders = (from o in db.Orders
+                                  join od in db.OrderDetails on o.OrderId equals od.OrderId
+                                  join u in db.Users on o.UserId equals u.Id
+                                  group new { o, u, od } by new { o.OrderId, o.OrderDate, o.UserId, u.Email } into g
+                                  orderby g.Key.OrderDate descending
+                                  select new
+                                  {
+                                      g.Key.UserId,
+                                      g.Key.Email,
+                                      OrderDate = g.Key.OrderDate,
+                                      Books = g.Select(x => new { x.od.BookTitle, x.od.Quantity }).ToList()
+                                  }).AsEnumerable() // Trecem la evaluare in memorie
+              .Select(g => new OrderViewModel
+              {
+                  UserId = g.UserId,
+                  UserEmail = g.Email,
+                  BookDetails = g.Books.ToDictionary(x => x.BookTitle, x => x.Quantity),
+                  OrderDate = g.OrderDate
+              }).ToList();
+
                 }
                 catch (Exception ex)
                 {
@@ -112,7 +112,6 @@ namespace proiect_ProgramareAvansataPePlatforma.NET.Controllers
         };
 
                 var chart = new System.Web.Helpers.Chart(width: 600, height: 400)
-                    .AddTitle("Cărți Vândute în Ultimele 3 Luni")
                     .AddSeries(
                         chartType: "Column",
                         xValue: salesData.Select(s => s.Month).ToArray(),
