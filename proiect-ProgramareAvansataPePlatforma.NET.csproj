@@ -49,6 +49,9 @@
     <Reference Include="BouncyCastle.Cryptography, Version=2.0.0.0, Culture=neutral, PublicKeyToken=072edcf4a5328938, processorArchitecture=MSIL">
       <HintPath>packages\BouncyCastle.Cryptography.2.3.1\lib\net461\BouncyCastle.Cryptography.dll</HintPath>
     </Reference>
+    <Reference Include="CrystalDecisions.CrystalReports.Engine, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.ReportSource, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="CrystalDecisions.Shared, Version=13.0.4000.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>packages\EntityFramework.6.5.1\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -417,20 +420,18 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\OrdersController.cs" />
+    <Compile Include="CrystalReport1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CrystalReport1.rpt</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202411291849298_InitialMigration.cs" />
-    <Compile Include="Migrations\202411291849298_InitialMigration.Designer.cs">
-      <DependentUpon>202411291849298_InitialMigration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202411300654170_RegexBook.cs" />
-    <Compile Include="Migrations\202411300654170_RegexBook.Designer.cs">
-      <DependentUpon>202411300654170_RegexBook.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202412041540372_BookNameUnique.cs" />
-    <Compile Include="Migrations\202412041540372_BookNameUnique.Designer.cs">
-      <DependentUpon>202412041540372_BookNameUnique.cs</DependentUpon>
+    <Compile Include="Migrations\202412051453518_InitialCreate.cs" />
+    <Compile Include="Migrations\202412051453518_InitialCreate.Designer.cs">
+      <DependentUpon>202412051453518_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -555,15 +556,16 @@
     <Content Include="Scripts\jquery-3.7.0.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202411291849298_InitialMigration.resx">
-      <DependentUpon>202411291849298_InitialMigration.cs</DependentUpon>
+    <EmbeddedResource Include="CrystalReport1.rpt">
+      <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
+      <LastGenOutput>CrystalReport1.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202411300654170_RegexBook.resx">
-      <DependentUpon>202411300654170_RegexBook.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202412051453518_InitialCreate.resx">
+      <DependentUpon>202412051453518_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202412041540372_BookNameUnique.resx">
-      <DependentUpon>202412041540372_BookNameUnique.cs</DependentUpon>
-    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{C0C07587-41A7-46C8-8FBD-3F9C8EBE2DDC}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

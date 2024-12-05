@@ -3,7 +3,7 @@
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class InitialMigration : DbMigration
+    public partial class InitialCreate : DbMigration
     {
         public override void Up()
         {
@@ -11,13 +11,12 @@
                 "dbo.Books",
                 c => new
                     {
-                        BookId = c.Int(nullable: false, identity: true),
-                        Title = c.String(),
-                        Author = c.String(),
+                        BookTitle = c.String(nullable: false, maxLength: 100),
+                        Author = c.String(nullable: false, maxLength: 100),
                         Price = c.Decimal(nullable: false, precision: 18, scale: 2),
                         Stock = c.Int(nullable: false),
                     })
-                .PrimaryKey(t => t.BookId);
+                .PrimaryKey(t => t.BookTitle);
             
             CreateTable(
                 "dbo.OrderDetails",
@@ -25,14 +24,14 @@
                     {
                         OrderDetailId = c.Int(nullable: false, identity: true),
                         OrderId = c.Int(nullable: false),
-                        BookId = c.Int(nullable: false),
+                        BookTitle = c.String(maxLength: 100),
                         Quantity = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.OrderDetailId)
-                .ForeignKey("dbo.Books", t => t.BookId, cascadeDelete: true)
+                .ForeignKey("dbo.Books", t => t.BookTitle)
                 .ForeignKey("dbo.Orders", t => t.OrderId, cascadeDelete: true)
                 .Index(t => t.OrderId)
-                .Index(t => t.BookId);
+                .Index(t => t.BookTitle);
             
             CreateTable(
                 "dbo.Orders",
@@ -124,7 +123,7 @@
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.OrderDetails", "OrderId", "dbo.Orders");
-            DropForeignKey("dbo.OrderDetails", "BookId", "dbo.Books");
+            DropForeignKey("dbo.OrderDetails", "BookTitle", "dbo.Books");
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
@@ -132,7 +131,7 @@
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
             DropIndex("dbo.Orders", new[] { "UserId" });
-            DropIndex("dbo.OrderDetails", new[] { "BookId" });
+            DropIndex("dbo.OrderDetails", new[] { "BookTitle" });
             DropIndex("dbo.OrderDetails", new[] { "OrderId" });
             DropTable("dbo.AspNetRoles");
             DropTable("dbo.AspNetUserRoles");

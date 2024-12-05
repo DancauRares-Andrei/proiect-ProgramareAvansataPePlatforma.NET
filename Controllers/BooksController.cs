@@ -20,7 +20,7 @@ namespace proiect_ProgramareAvansataPePlatforma.NET.Controllers
         // POST: Books/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "BookId,Title,Author,Price,Stock")] Book book)
+        public ActionResult Create([Bind(Include = "BookTitle,Author,Price,Stock")] Book book)
         {
             if (ModelState.IsValid)
             {
@@ -32,7 +32,14 @@ namespace proiect_ProgramareAvansataPePlatforma.NET.Controllers
                 catch (Exception ex)
                 {
                     System.Diagnostics.Trace.TraceError($"Eroare la preluarea cărților: {ex.Message}");
-                    return RedirectToAction("Error", "Home", new HandleErrorInfo(ex, "Books", "Index"));
+                    var errorModel = new ErrorViewModel
+                    {
+                        ControllerName = "Books",
+                        ActionName = "Index",
+                        ErrorMessage = ex.Message
+                    };
+                    return RedirectToAction("Error", "Home", errorModel);
+
                 }
                 finally
                 {

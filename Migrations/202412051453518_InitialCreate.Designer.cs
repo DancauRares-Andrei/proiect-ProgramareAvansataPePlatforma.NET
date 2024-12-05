@@ -7,13 +7,13 @@ namespace proiect_ProgramareAvansataPePlatforma.NET.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.5.1")]
-    public sealed partial class BookNameUnique : IMigrationMetadata
+    public sealed partial class InitialCreate : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(BookNameUnique));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(InitialCreate));
         
         string IMigrationMetadata.Id
         {
-            get { return "202412041540372_BookNameUnique"; }
+            get { return "202412051453518_InitialCreate"; }
         }
         
         string IMigrationMetadata.Source

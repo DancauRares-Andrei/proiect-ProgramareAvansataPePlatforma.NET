@@ -21,9 +21,9 @@
                     <li>@Html.ActionLink("Acasă", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("Despre", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                    @if (User.Identity.Name == "raresdancau@gmail.com")
+                    @if (User.Identity.Name == "raresdancau2@gmail.com")
                     {<li>@Html.ActionLink("Adăugare carte", "Create", "Books", new { area = "" }, new { @class = "nav-link" })</li>}
-                    @if (Request.IsAuthenticated) { <li>@Html.ActionLink("Comandă o carte", "Create", "Orders", new { area = "" }, new { @class = "nav-link" })</li>}
+                    @if (Request.IsAuthenticated) { <li>@Html.ActionLink("Comandă cărți", "Create", "Orders", new { area = "" }, new { @class = "nav-link" })</li>}
                 </ul>
                  @Html.Partial("_LoginPartial")
             </div>

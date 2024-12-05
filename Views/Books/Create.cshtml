@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "Adaugă Carte";
 }
-@if (Request.IsAuthenticated && User.Identity.Name=="raresdancau@gmail.com")
+@if (Request.IsAuthenticated && User.Identity.Name=="raresdancau2@gmail.com")
 {
     <h2>Adaugă Carte</h2>
 
@@ -17,10 +17,10 @@
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
             <div class="form-group">
-                @Html.LabelFor(model => model.Title, new { @class = "control-label col-md-2" })
+                @Html.LabelFor(model => model.BookTitle, new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+                    @Html.EditorFor(model => model.BookTitle, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.BookTitle, "", new { @class = "text-danger" })
                 </div>
             </div>
 
@@ -50,7 +50,7 @@
             <br />
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Save" class="btn btn-primary btn-md" />
+                    <input type="submit" value="Adaugă carte" class="btn btn-primary btn-md" />
                 </div>
             </div>
         </div>

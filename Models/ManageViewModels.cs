@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
@@ -86,8 +87,7 @@ namespace proiect_ProgramareAvansataPePlatforma.NET.Models
     }
     public class BookViewModel
     {
-        public int Id { get; set; }
-        public string Title { get; set; }
+        public string BookTitle { get; set; }
         public string Author { get; set; }
         public decimal Price { get; set; }
         public int Stock { get; set; }
@@ -98,6 +98,12 @@ namespace proiect_ProgramareAvansataPePlatforma.NET.Models
         public string UserEmail { get; set; }
         public Dictionary<string, int> BookDetails { get; set; } // Titlu și Stoc
         public DateTime OrderDate { get; set; }
+    }
+    public class ErrorViewModel
+    {
+        public string ControllerName { get; set; }
+        public string ActionName { get; set; }
+        public string ErrorMessage { get; set; }
     }
 
 }

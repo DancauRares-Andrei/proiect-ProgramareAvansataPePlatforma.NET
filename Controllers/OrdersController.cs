@@ -50,7 +50,7 @@ namespace proiect_ProgramareAvansataPePlatforma.NET.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Order order, int[] selectedBooks, int[] quantities)
+        public ActionResult Create(Order order, string[] selectedBooks, int[] quantities)
         {
             try
             {
@@ -62,9 +62,9 @@ namespace proiect_ProgramareAvansataPePlatforma.NET.Controllers
 
                     for (int i = 0; i < selectedBooks.Length; i++)
                     {
-                        int bookId = selectedBooks[i];
+                        string bookTitle = selectedBooks[i];
                         int quantity = quantities[i];
-                        var book = db.Books.Find(bookId);
+                        var book = db.Books.Find(bookTitle);
                         if (book != null && book.Stock >= quantity)
                         {
                             book.Stock -= quantity;
@@ -73,7 +73,7 @@ namespace proiect_ProgramareAvansataPePlatforma.NET.Controllers
                             var orderDetail = new OrderDetail
                             {
                                 OrderId = order.OrderId,
-                                BookId = bookId,
+                                BookTitle = bookTitle,
                                 Quantity = quantity
                             };
                             db.OrderDetails.Add(orderDetail);
@@ -90,10 +90,10 @@ namespace proiect_ProgramareAvansataPePlatforma.NET.Controllers
             }
             finally
             {
-                if (db != null)
+               /* if (db != null)
                 {
                     db.Dispose();
-                }
+                }*/
             }
 
             var books = db.Books.Where(b => b.Stock > 0).ToList();

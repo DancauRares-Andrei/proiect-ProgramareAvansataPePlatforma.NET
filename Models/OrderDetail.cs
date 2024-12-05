@@ -10,7 +10,7 @@ namespace proiect_ProgramareAvansataPePlatforma.NET.Models
     {
         public int OrderDetailId { get; set; }
         public int OrderId { get; set; }
-        public int BookId { get; set; }
+        public string BookTitle { get; set; }
         [RegularExpression(@"^[1-9]\d*$", ErrorMessage = "Stocul cărții alese trebuie să fie un număr pozitiv mai mare ca 0.")]
         public int Quantity { get; set; }   
         public virtual Order Order { get; set; }

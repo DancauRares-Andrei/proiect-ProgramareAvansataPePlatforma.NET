@@ -43,22 +43,22 @@ namespace proiect_ProgramareAvansataPePlatforma.NET.Controllers
                 {
                     orders = (from o in db.Orders
                               join od in db.OrderDetails on o.OrderId equals od.OrderId
-                              join b in db.Books on od.BookId equals b.BookId
+                              //join b in db.Books on od.BookId equals b.BookId
                               join u in db.Users on o.UserId equals u.Id
                               orderby o.OrderDate descending
-                              group new { o, b, u, od } by new { o.OrderId, o.OrderDate, o.UserId, u.Email } into g
+                              group new { o, u, od } by new { o.OrderId, o.OrderDate, o.UserId, u.Email } into g
                               select new
                               {
                                   g.Key.UserId,
                                   g.Key.Email,
                                   OrderDate = g.Key.OrderDate,
-                                  Books = g.Select(x => new { x.b.Title, x.od.Quantity }).ToList()
+                                  Books = g.Select(x => new { x.od.BookTitle, x.od.Quantity }).ToList()
                               }).AsEnumerable() // Trecem la evaluare in memorie
                          .Select(g => new OrderViewModel
                          {
                              UserId = g.UserId,
                              UserEmail = g.Email,
-                             BookDetails = g.Books.ToDictionary(x => x.Title, x => x.Quantity),
+                             BookDetails = g.Books.ToDictionary(x => x.BookTitle, x => x.Quantity),
                              OrderDate = g.OrderDate
                          }).ToList();
                 }
@@ -148,9 +148,9 @@ namespace proiect_ProgramareAvansataPePlatforma.NET.Controllers
 
             return View();
         }
-        public ActionResult Error()
+        public ActionResult Error(ErrorViewModel model)
         {
-            return View();
+            return View(model);
         }
     }
 }
